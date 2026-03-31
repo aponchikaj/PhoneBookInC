@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 // phone book in C By Lazare Mirziashvili
 // Functions I'm gonna make: Add Contact, Delete Contact, Update Contact
@@ -13,8 +14,8 @@ typedef struct {
 	string countryCode[3]; // e.g +995 / +1 ....	
 } contact;
 
-int contactsLength = 0;
-contact CONTACTS[contactsLength];
+#define MAX_CONTACTS 100
+contact CONTACTS[MAX_CONTACTS];
 
 void AddContact(string name[100],string phone[100],string countryCode[3]);
 void DeleteContact(string name[100]);
