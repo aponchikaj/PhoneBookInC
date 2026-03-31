@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 // phone book in C By Lazare Mirziashvili
 // Functions I'm gonna make: Add Contact, Delete Contact, Update Contact
@@ -16,12 +17,13 @@ typedef struct {
 
 #define MAX_CONTACTS 100
 contact CONTACTS[MAX_CONTACTS];
+int CONTACTS_SIZE = 0;
 
-void AddContact(string name[100],string phone[100],string countryCode[3]);
-void DeleteContact(string name[100]);
-void UpdateContact(string name[100]);
-void GetContacts();
-void GetContact(string name[100]);
+int AddContact(string name[100],string phone[100],string countryCode[3]);
+int DeleteContact(string name[100]);
+int UpdateContact(string name[100]);
+int GetContacts();
+int GetContact(string name[100]);
 
 bool compareStrings(string str1[100], string str2[100]);
 int StringLength(string str[100]);
@@ -60,11 +62,43 @@ bool compareStrings(string str1[100], string str2[100]){
 	return 0;
 }
 
-void AddContact(string name[100],string phone[100],string countryCode[3]){
+int AddContact(string name[100],string phone[100],string countryCode[3]){
+	for(int i =0;i<CONTACTS_SIZE;i++){
+		if(compareStrings(name,CONTACTS[i].name) && compareStrings(phone,CONTACTS[i].phone)){
+			printf("Contact with same number already exists !");
+			return 1;
+		}
+	}
 	
+	strcpy(CONTACTS[CONTACTS_SIZE+1].name, name);
+	strcpy(CONTACTS[CONTACTS_SIZE+1].phone,phone);
+	CONTACTS[CONTACTS_SIZE].index = CONTACTS_SIZE;
+	strcpy(CONTACTS[CONTACTS_SIZE+1].countryCode,countryCode);
+
+	CONTACTS_SIZE++;
+
+	printf("Added successfully !");
+	return 0;
 }
 
-void DeleteContact(string name[100]){}
-void UpdateContact(string name[100]){}
-void GetContacts(){}
-void GetContact(string name[100]){}
+int DeleteContact(string name[100]){
+	for(int i =0;i<CONTACTS_SIZE;i++){
+		if(compareStrings(CONTACTS[i].name,name)){
+			CONTACTS[i].name[0] = '\0';
+			CONTACTS[i].phone[0] = '\0';
+			CONTACTS[i].index = -1;
+			CONTACTS[i].countryCode[0] = '\0';
+			CONTACTS_SIZE--;
+			printf("%s with index %d has been deleted !",CONTACTS[i].name,CONTACTS[i].index);
+			return 0;
+		}
+	}
+
+
+	printf("%s was not found !",name);
+	return 1;
+}
+
+int UpdateContact(string name[100]){}
+int GetContacts(){}
+int GetContact(string name[100]){}
