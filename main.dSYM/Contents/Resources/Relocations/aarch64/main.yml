@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/l4zare/Documents/c/main'
+relocations:     []
+...
