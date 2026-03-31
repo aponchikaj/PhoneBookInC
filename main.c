@@ -20,8 +20,8 @@ contact CONTACTS[MAX_CONTACTS];
 int CONTACTS_SIZE = 0;
 
 int AddContact(string name[100],string phone[100],string countryCode[3]);
-int DeleteContact(string name[100]);
-int UpdateContact(string name[100]);
+int DeleteContact(int index);
+int UpdateContact(int index);
 int GetContacts();
 int GetContact(string name[100]);
 
@@ -81,9 +81,9 @@ int AddContact(string name[100],string phone[100],string countryCode[3]){
 	return 0;
 }
 
-int DeleteContact(string name[100]){
+int DeleteContact(int index){
 	for(int i =0;i<CONTACTS_SIZE;i++){
-		if(compareStrings(CONTACTS[i].name,name)){
+		if(CONTACTS[i].index == index){
 			CONTACTS[i].name[0] = '\0';
 			CONTACTS[i].phone[0] = '\0';
 			CONTACTS[i].index = -1;
@@ -95,10 +95,46 @@ int DeleteContact(string name[100]){
 	}
 
 
-	printf("%s was not found !",name);
+	printf("User was not found !");
 	return 1;
 }
 
-int UpdateContact(string name[100]){}
+int UpdateContact(int index){
+	for(int i =0;i<CONTACTS_SIZE;i++){
+		if(CONTACTS[i].index == index){
+			printf("Changing: \n1. Name\n2. Phone\n3. Country Code\n");
+			int option;
+			
+			scanf("%d",&option);
+			if(option == 1){
+				string newName[100];
+				printf("Enter new Name: ");
+				scanf(" %s",newName);
+				
+				strcpy(newName, CONTACTS[i].name);
+				printf("Success !");
+				return 0;
+			}else if(option == 2){
+				string newPhone[100];
+				printf("Enter new Phone: ");
+				scanf(" %s",newPhone);
+			
+				strcpy(newPhone,CONTACTS[i].phone);
+				printf("Success !");
+				return 0;
+			}else if(option == 3){
+				string newCountryCode[3];
+				printf("Enter new Country Code: (without including '+'): ");
+				scanf(" %s",newCountryCode);
+				printf("Success !");
+				return 0;
+			}else {printf("Invalid operation Try again later!");return 1;}
+		}
+	}
+
+	printf("User not found !");
+	return 1;
+}
+
 int GetContacts(){}
 int GetContact(string name[100]){}
