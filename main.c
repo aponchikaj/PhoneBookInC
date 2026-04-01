@@ -16,7 +16,7 @@ typedef struct {
 } contact;
 
 #define MAX_CONTACTS 100
-contact CONTACTS[MAX_CONTACTS];
+static contact CONTACTS[MAX_CONTACTS];
 int CONTACTS_SIZE = 0;
 
 int AddContact(string name[100],string phone[100],string countryCode[3]);
@@ -29,8 +29,48 @@ bool compareStrings(string str1[100], string str2[100]);
 int StringLength(string str[100]);
 
 int main(void){
+
+	printf("\n\nWelcome to Phone Book made in C By Lazare Mirziashvili\n");
 		
-	
+	while(true){
+		printf("\n\nMENU:\n1. Add Contact\n2. Delete Contact\n3. Update Contact\n4. Get Contacts\n5. Get Contact\n6. Exit\n\n Choose: ");
+		int option;
+		
+		scanf("%d",&option);
+		
+		if(option == 1){	
+			string name[100];
+			string phone[100];
+			string countryCode[3];
+			printf("\n\nEnter Contact's name: ");
+			scanf(" %s",name);
+			printf("\n\nEnter Contact's phone: ");
+			scanf(" %s",phone);
+			printf("\n\nEnter Contact's country code: ");
+			scanf(" %s",countryCode);
+			AddContact(name,phone,countryCode);
+		}else if(option == 2){
+			int index;
+			printf("\n\nEnter user Index: ");
+			scanf(" %d",&index);
+			DeleteContact(index);
+		}else if(option == 3){
+			int index;
+			printf("\n\nEnter user index: ");
+			scanf(" %d",&index);
+			UpdateContact(index);
+		}else if(option == 4){
+			GetContacts();
+		}else if(option == 5){
+			int index;
+			printf("\n\nEnter user index: ");
+			scanf(" %d",&index);
+			GetContact(index);
+		}else if(option == 6){
+			printf("Exiting...");
+			return 0;
+		}
+	}
 
 	return 0;
 }
@@ -64,16 +104,16 @@ bool compareStrings(string str1[100], string str2[100]){
 
 int AddContact(string name[100],string phone[100],string countryCode[3]){
 	for(int i =0;i<CONTACTS_SIZE;i++){
-		if(compareStrings(name,CONTACTS[i].name) && compareStrings(phone,CONTACTS[i].phone)){
+		if(!compareStrings(name, CONTACTS[i].name) && !compareStrings(phone, CONTACTS[i].phone)){
 			printf("Contact with same number already exists !");
 			return 1;
 		}
 	}
 	
-	strcpy(CONTACTS[CONTACTS_SIZE+1].name, name);
-	strcpy(CONTACTS[CONTACTS_SIZE+1].phone,phone);
+	strcpy(CONTACTS[CONTACTS_SIZE].name, name);
+	strcpy(CONTACTS[CONTACTS_SIZE].phone, phone);
+	strcpy(CONTACTS[CONTACTS_SIZE].countryCode, countryCode);
 	CONTACTS[CONTACTS_SIZE].index = CONTACTS_SIZE;
-	strcpy(CONTACTS[CONTACTS_SIZE+1].countryCode,countryCode);
 
 	CONTACTS_SIZE++;
 
@@ -84,12 +124,15 @@ int AddContact(string name[100],string phone[100],string countryCode[3]){
 int DeleteContact(int index){
 	for(int i =0;i<CONTACTS_SIZE;i++){
 		if(CONTACTS[i].index == index){
+			char savedName[100];
+			strcpy(savedName, CONTACTS[i].name);
 			CONTACTS[i].name[0] = '\0';
 			CONTACTS[i].phone[0] = '\0';
+			int savedIndex = CONTACTS[i].index;
 			CONTACTS[i].index = -1;
 			CONTACTS[i].countryCode[0] = '\0';
 			CONTACTS_SIZE--;
-			printf("%s with index %d has been deleted !",CONTACTS[i].name,CONTACTS[i].index);
+			printf("%s with index %d has been deleted !",savedName,savedIndex);
 			return 0;
 		}
 	}
