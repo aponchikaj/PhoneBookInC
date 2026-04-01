@@ -23,7 +23,7 @@ int AddContact(string name[100],string phone[100],string countryCode[3]);
 int DeleteContact(int index);
 int UpdateContact(int index);
 int GetContacts();
-int GetContact(string name[100]);
+int GetContact(int index);
 
 bool compareStrings(string str1[100], string str2[100]);
 int StringLength(string str[100]);
@@ -136,5 +136,28 @@ int UpdateContact(int index){
 	return 1;
 }
 
-int GetContacts(){}
-int GetContact(string name[100]){}
+int GetContacts(){
+	if(CONTACTS_SIZE == 0){
+		printf("Woops... No contacts found !");
+		return 0;
+	}
+	
+	for(int i=0;i<CONTACTS_SIZE;i++){
+		printf(" #%d | %s | %s | %s ",CONTACTS[i].index, CONTACTS[i].name,CONTACTS[i].countryCode,CONTACTS[i].phone);
+	}
+
+	return 0;
+}
+int GetContact(int index){
+	if(CONTACTS_SIZE == 0){ printf("You don't have contacts");return 1;};
+
+	for(int i =0;i<CONTACTS_SIZE;i++){
+		if(CONTACTS[i].index == index){
+			printf(" #%d | %s | %s | %s",CONTACTS[i].index,CONTACTS[i].name,CONTACTS[i].countryCode,CONTACTS[i].phone);
+		return 0;
+		}
+	}
+
+	printf("Index not found !");
+	return 1;
+}
