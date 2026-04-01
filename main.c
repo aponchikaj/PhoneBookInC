@@ -67,7 +67,7 @@ int main(void){
 			scanf(" %d",&index);
 			GetContact(index);
 		}else if(option == 6){
-			printf("Exiting...");
+			printf("Goodbye !");
 			return 0;
 		}
 	}
@@ -197,7 +197,7 @@ int GetContact(int index){
 	for(int i =0;i<CONTACTS_SIZE;i++){
 		if(CONTACTS[i].index == index){
 			printf(" #%d | %s | %s | %s",CONTACTS[i].index,CONTACTS[i].name,CONTACTS[i].countryCode,CONTACTS[i].phone);
-		return 0;
+			return 0;
 		}
 	}
 
